@@ -30,14 +30,13 @@ class UiGenerator
             }
             $table .= '</tr>';
 
-
-            $table .= '<tr>';
             foreach ($items as $item) {
+                $table .= '<tr>';
                 foreach ($item as $value) {
                     $table .= "<td>{$value}</td>";
                 }
+                $table .= '</tr>';
             }
-            $table .= '</tr>';
         }
 
         $table .= '</table>';
