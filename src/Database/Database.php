@@ -7,9 +7,9 @@ use Exception;
 class Database
 {
     private $host = 'localhost';
-    private $user = '';
-    private $password = '';
-    private $name = '';
+    private $user = 'terehov';
+    private $password = 'AlphaOm33XdS';
+    private $name = 'demo';
 
     private $conn = null;
 
@@ -30,9 +30,6 @@ class Database
         $this->conn = null;
     }
 
-    /**
-     * 
-     */
     public function execute($sql)
     {
         try {
@@ -47,6 +44,6 @@ class Database
         $dbData = $this->conn->query($sql);
         $dbData->setFetchMode(\PDO::FETCH_ASSOC);
 
-        return $dbData;
+        return $dbData->fetchAll();
     }
 }
