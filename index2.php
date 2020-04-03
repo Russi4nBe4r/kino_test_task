@@ -30,30 +30,55 @@ function makeFilmsObject(array $films)
 
 ?>
 
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
 <div id="tree"></div>
 
 <script>
     let obj = <?=makeFilmsObject($films)?>;
 
-    function makeTreeFromObj(obj) {
+    function makeTreeFromObj(obj, level) {
         let tree = '';
         let leaf = '';
 
         for (let key in obj) {
             if (typeof(obj[key]) == 'object') {
                 
-                leaf += '<li>' + key + makeTreeFromObj(obj[key]) + '</li>';
+                leaf += '<li>' + key + makeTreeFromObj(obj[key], level + 1) + '</li>';
             } else {
                 leaf += '<li>' + obj[key] + '</li>';
             }
         }
 
         if (leaf) {
-            tree += '<ul>' + leaf + '</ul>';
+            if (level == 0) {
+                tree += '<ul id="root">' + leaf + '</ul>';
+            } else {
+                tree += '<ul class="hidden">' + leaf + '</ul>';
+            }
         }
 
         return tree || '';
     }
 
-    tree.innerHTML = makeTreeFromObj(obj);
+    tree.innerHTML = makeTreeFromObj(obj, 0);
+
+    document.addEventListener('click', function(event) {
+        if (event.target.tagName == 'LI') {
+            let chidlren = event.target.childNodes;
+            if (chidlren.length > 1) {
+                console.log(chidlren[1]);
+                if (chidlren[1].className == 'hidden') {
+                    chidlren[1].classList.remove('hidden');
+                } else {
+                    chidlren[1].classList.add('hidden');
+                }
+            }
+        }
+
+    });
 </script>
